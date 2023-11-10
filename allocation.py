@@ -1,0 +1,1 @@
+categories = ['entertainment', 'groceries', 'other','travel']
