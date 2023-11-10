@@ -1,3 +1,5 @@
+import re
+
 categories = ['entertainment', 'groceries', 'other','travel']
 
 def __init__ (self, total_income, checking_percent, savings_percent, bank_accounts):
@@ -26,3 +28,29 @@ def calculator(self): # Gwon and Christian
         savings_balance = self.bank_accounts["savings"]
         savings_balance += money_to_savings
         self.bank_accounts["savings"] = savings_balance
+
+def extract_pay_stub_info(file_path): #Tulasi Venkat
+    
+    #assumes that the file is a text file
+    with open(file_path, 'r') as file:
+        text = file.read()
+        
+    date_paid_regex = r"Date Paid: (\d{2}/\d{2}/\d{4})"
+    gross_pay_regex = r"Gross Pay: \$(\d+.\d{2})"
+    deductions_regex = r"Total Deductions: \$(\d+.\d{2})"
+    net_pay_regex = r"Net Pay: \$(\d+.\d{2})"
+
+    date_paid = re.search(date_paid_regex, text)
+    gross_pay = re.search(gross_pay_regex, text)
+    deductions = re.search(deduction_regex, text)
+    net_pay = re.search(net_pay_regex, text)
+
+    pay_stub_data = {
+        "date_paid": date_paid.group(1)
+        "gross_pay": gross_pay.group(1)
+        "deduction": deductions.group(1)
+        "net_pay": net_pay.group(1)
+    }
+return pay_stub_data
+
+
