@@ -6,13 +6,13 @@ PAYSTUB = {
 
 class example:
     
-    def __init__(self, key):
+    def __init__(self, date):
         
-        self.key = PAYSTUB.get(key)
+        self.date = PAYSTUB.get(date)
      
     def __str__(self):
         
-        return f"This is how much money you inputed on this day: ${self.key}"
+        return f"This is how much money you inputed on this day: ${self.date}"
         
         
 e = example("09/13/21")
