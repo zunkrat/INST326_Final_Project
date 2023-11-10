@@ -1,7 +1,5 @@
 import re
 
-categories = ['entertainment', 'groceries', 'other','travel']
-
 def __init__ (self, total_income, checking_percent, savings_percent, bank_accounts):
 
     self.bank_accounts = bank_accounts
@@ -51,6 +49,18 @@ def extract_pay_stub_info(file_path): #Tulasi Venkat
         "deduction": deductions.group(1)
         "net_pay": net_pay.group(1)
     }
+
+def user_allocation():
+    categories = ['entertainment', 'groceries', 'other','travel']
+    allocation_percentages = {}
+    
+    for category in categories:
+        percentage = input(f"Enter a percetage for {categories}")
+        allocation_percentages[category] = percentage
+    
+    return allocation_percentages
+
+
 return pay_stub_data
 
 
