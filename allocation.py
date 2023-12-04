@@ -50,9 +50,13 @@ def extract_pay_stub_info(file_path): #Tulasi Venkat
         "net_pay": net_pay.group(1)
     }
 
-def user_allocation():
+def user_allocation(): #Ojie
+    
     categories = ['entertainment', 'groceries', 'other','travel']
+    # Different categories
+    
     allocation_percentages = {}
+    # Allocation percentage for each category
     
     for category in categories:
         percentage = input(f"Enter a percetage for {category}")
@@ -60,7 +64,7 @@ def user_allocation():
     
     return allocation_percentages
 
-def calculate_total_percentage(allocation_percentages):
+def calculate_total_percentage(allocation_percentages): #Ojie
     total_percentage = sum(allocation_percentages.values())
     return total_percentage
 
