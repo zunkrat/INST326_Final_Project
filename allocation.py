@@ -55,10 +55,14 @@ def user_allocation():
     allocation_percentages = {}
     
     for category in categories:
-        percentage = input(f"Enter a percetage for {categories}")
-        allocation_percentages[category] = percentage
+        percentage = input(f"Enter a percetage for {category}")
+        allocation_percentages[category] = float(percentage)
     
     return allocation_percentages
+
+def calculate_total_percentage(allocation_percentages):
+    total_percentage = sum(allocation_percentages.values())
+    return total_percentage
 
 
 return pay_stub_data
