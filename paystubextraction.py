@@ -1,3 +1,4 @@
+#Tulasi Venkat
 import re
 
 class PayStubExtraction:
@@ -7,7 +8,8 @@ class PayStubExtraction:
         self.current_earnings = current_earnings
         self.current_taxes = current_taxes
         self.net_pay = net_pay
-        
+
+    #technique: regular expressions
     patterns = {
         'Direct Deposit Date': r'Paid by DIRECT DEPOSIT on (\d{2}-\d{2}-\d{4})',
         'Employee Full Name': r'(\w+ \w+ \w+)  \n',
@@ -17,6 +19,7 @@ class PayStubExtraction:
     }
 
 file_path = "converted_pay_stub.txt" 
+#technique: with statement
 with open(file_path, 'r') as file:
     text_content = file.read()
         
