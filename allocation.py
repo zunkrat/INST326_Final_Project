@@ -52,23 +52,37 @@ def extract_pay_stub_info(file_path): #Tulasi Venkat
 
 def user_allocation(): #Ojie
     
-    categories = ['entertainment', 'groceries', 'other','travel']
-    # Different categories
+    while True:
+        categories = frozenset(['Entertainment', 'Groceries', 'Housing', 'Utilities', 'Travel', 'Recreation', 'Transportation', 'Other'])    
+        allocation_percentages = {}
     
-    allocation_percentages = {}
-    # Allocation percentage for each category
-    
-    for category in categories:
-        percentage = input(f"Enter a percetage for {category}")
-        allocation_percentages[category] = float(percentage)
-    
-    return allocation_percentages
+        print("Available Categories:")
+        for category in categories:
+            print(category)
+        
+        allocate = input("Do you want to allocate money to any of the above categories? Enter 'yes': ")
 
-def calculate_total_percentage(allocation_percentages): #Ojie
-    total_percentage = sum(allocation_percentages.values())
-    return total_percentage
+        if allocate.lower() != 'yes':
+            break
+    
+        print("You will enter a percentage for each category, the '%' symbol is not required.")
+        for category in categories:
+            while True:
+                try:
+                    percentage = input(f"Enter a percetage for {category}: ")
+                    percentage = float(percentage.rstrip('%'))
+            
+                    if(0<= percentage <=100):
+                        allocation_percentages[category] = (percentage)
+                        break
+                        
+                    else:
+                        print("Enter a valid number between 0 and 100.")
+                except ValueError:
+                    print("Invalid input. Enter a number between 0 and 100.")
+    
+
 
 
 return pay_stub_data
-
 
