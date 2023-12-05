@@ -1,31 +1,38 @@
 import re
 
-def __init__ (self, total_income, checking_percent, savings_percent, bank_accounts):
-
-    self.bank_accounts = bank_accounts
-    self.total_income = total_income
-    self.checking_percent = checking_percent
-    self.savings_percent = savings_percent
-
-def calculator(self): # Gwon and Christian
-
-    money_to_checking = self.total_income * self.checking_percent
-
-    # budgetings such as groceries, etc from checking account.
+class IncomeAllocator:
     
-    money_to_savings = self.total_income * self.savings_percent
+    def __init__(self, total_income, checking_percent, savings_percent, bank_accounts):
+        self.bank_accounts = bank_accounts
+        self.total_income = total_income
+        self.checking_percent = checking_percent
+        self.savings_percent = savings_percent
 
-    # budgetings such as groceries, etc from checking account.
+    def calculator(self):
+        money_to_checking = self.total_income * self.checking_percent
+        money_to_savings = self.total_income * self.savings_percent
 
-    if isinstance(money_to_checking, int):
-        checking_balance = self.bank_accounts["checking"]
-        checking_balance += money_to_checking
-        self.bank_accounts["checking"] = checking_balance
-    
-    if isinstance(money_to_savings, int):
-        savings_balance = self.bank_accounts["savings"]
-        savings_balance += money_to_savings
-        self.bank_accounts["savings"] = savings_balance
+        if isinstance(money_to_checking, (int, float)):
+            checking_balance = self.bank_accounts.get("checking", 0)
+            checking_balance += money_to_checking
+            self.bank_accounts["checking"] = checking_balance
+
+        if isinstance(money_to_savings, (int, float)):
+            savings_balance = self.bank_accounts.get("savings", 0)
+            savings_balance += money_to_savings
+            self.bank_accounts["savings"] = savings_balance
+
+    def get_total_balance(self):
+        total_checking_balance = self.bank_accounts.get("checking", 0)
+        total_savings_balance = self.bank_accounts.get("savings", 0)
+
+        for account, balance in self.bank_accounts.items():
+            if account == "checking":
+                total_checking_balance += balance
+            elif account == "savings":
+                total_savings_balance += balance
+
+        return total_checking_balance, total_savings_balance
 
 def extract_pay_stub_info(file_path): #Tulasi Venkat
     
