@@ -1,38 +1,112 @@
 import re
+from argparse import ArgumentParser
+import sys
 
 class IncomeAllocator:
+    """Class for managing income allocation to checking and savings accounts.
     
-    def __init__(self, total_income, checking_percent, savings_percent, bank_accounts):
+    Attributes:
+        total_income (float): Total income amount.
+        checking_percent (float): Percentage of the total income allocated to the checking account.
+        savings_percent (float): Percentage of the total income allocated to the savings account.
+        bank_accounts (dict): Dictionary to store allocated amounts in checking and savings accounts.        
+    """
+
+    def __init__(self, total_income, checking_percent, savings_percent):
+        """
+        Initialize the IncomeAllocator object.
+
+        Args:
+            total_income (float): Total income amount.
+            checking_percent (float): Percentage of the total income allocated to the checking account.
+            savings_percent (float): Percentage of the total income allocated to the savings account.
+            bank_accounts (dict): Dictionary to store allocated amounts in checking and savings accounts.
+            
+        Side effects:
+            Create IncomeAllocator attributes.
+        """
+
+        bank_accounts = {}
+        
         self.bank_accounts = bank_accounts
         self.total_income = total_income
         self.checking_percent = checking_percent
         self.savings_percent = savings_percent
+    
+    def check_percentage(self):
+        
+        if 0 <= self.checking_percent <= 1 and 0 <= self.savings_percent <= 1:
+            return self.checking_percent, self.savings_percent
+        
+        else:
+            raise ValueError("Percentage has to be within 0 to 1")
+
 
     def calculator(self):
+        """Calculate and allocate income to checking and savings accounts.
+        
+        Returns:
+            dict: the deposit amount to checking and savings account.
+        """
+        
+        self.check_percentage()
+        
         money_to_checking = self.total_income * self.checking_percent
         money_to_savings = self.total_income * self.savings_percent
 
-        if isinstance(money_to_checking, (int, float)):
-            checking_balance = self.bank_accounts.get("checking", 0)
-            checking_balance += money_to_checking
-            self.bank_accounts["checking"] = checking_balance
+        self.bank_accounts["checking"] = money_to_checking if isinstance(money_to_checking, (float)) else float(money_to_checking)
+        self.bank_accounts["savings"] = money_to_savings if isinstance(money_to_savings, (float)) else float(money_to_savings)
 
-        if isinstance(money_to_savings, (int, float)):
-            savings_balance = self.bank_accounts.get("savings", 0)
-            savings_balance += money_to_savings
-            self.bank_accounts["savings"] = savings_balance
+        return self.bank_accounts
 
-    def get_total_balance(self):
-        total_checking_balance = self.bank_accounts.get("checking", 0)
-        total_savings_balance = self.bank_accounts.get("savings", 0)
+def get_income_from_paystub():
+    # Replace this function with Tulasi's function later.
+    return 1500 # 1500 is just example income
 
-        for account, balance in self.bank_accounts.items():
-            if account == "checking":
-                total_checking_balance += balance
-            elif account == "savings":
-                total_savings_balance += balance
+def main():
+    """Calculate the amount to deposit into checking and savings account using the percentage from users and income read from the paystub.
+    
+    Args:
+        checking_percent: percentage set by the user to allocate income to checking account.
+        savings_percent: percentage set by the user to allocate income to savings account.
+        income (float): Total income amount obtained from the paystub. A default value obtained from the paystub using the get_income_from_paystub() function.
+    
+    Returns:
+        dict: the deposit amount to checking and savings account.
+    """
+    
+    args = parse_args(sys.argv[1:])
 
-        return total_checking_balance, total_savings_balance
+    income_allocator = IncomeAllocator(args.income, args.checking_percent, args.savings_percent)
+    deposit = income_allocator.calculator()
+
+    return deposit
+
+def parse_args(arglist):
+    """ Parse command-line arguments.
+    
+    Expect three mandatory arguments:
+        - checking_percent: percentage set by the user to allocate income to checking account.
+        - savings_percent: percentage set by the user to allocate income to savings account.
+        - income (float): Total income amount obtained from the paystub. A default value obtained from the paystub using the get_income_from_paystub() function.
+    
+    Args:
+        arglist (list of str): arguments from the command line.
+    
+    Returns:
+        namespace: the parsed arguments, as a namespace.
+    """
+        
+    parser = ArgumentParser()
+    parser.add_argument("checking_percent", type=float, help="Percentage for checking")
+    parser.add_argument("savings_percent", type=float, help="Percentage for savings")
+    parser.set_defaults(income = get_income_from_paystub())
+
+    return parser.parse_args(arglist)
+    
+if __name__ == "__main__":
+    deposit = main()
+    print(deposit) # To see if the code is working. Delete this line later. If you want to test, copy just IncomeAllocator class to new python file and run it.
 
 def extract_pay_stub_info(file_path): #Tulasi Venkat
     
