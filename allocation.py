@@ -149,7 +149,7 @@ def user_allocation(): # Ojie
         print("Available Categories:")
         print(", ".join(categories))  
 
-        allocate = input("Do you want to allocate money to any of the above categories? Enter 'yes': ")
+        allocate = input("Do you want to allocate money to any of the above categories? Enter 'yes'(or anything else to exit): ")
 
         if allocate.lower() != 'yes':
             break
