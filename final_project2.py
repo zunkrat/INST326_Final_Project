@@ -127,7 +127,10 @@ class IncomeAllocator:
                     break
 
                 if category in categories:
+                    remaining_percentage = self.checking_percent * 100 - total_percentage
+                    print(f"Remaining percentage: {remaining_percentage}%")
                     percentage = self.get_percentage_input(f"Enter a percentage for {category}: ")
+
                     if total_percentage + percentage > self.checking_percent * 100:
                         print(f"Total percentage will exceed the checking percent ({self.checking_percent * 100}%). Current total: {total_percentage}%")
                     else:
@@ -136,14 +139,11 @@ class IncomeAllocator:
                 else:
                     print("Invalid category. Please choose from the available categories.")
 
+
             print("Allocations:")
             for category, percentage in allocation_percentages.items():
                 allocated_amount = (percentage / 100) * checking_amount
                 print(f"{category}: {percentage}% - Allocated Amount: {allocated_amount}")
-
-            confirm = input("Do you want to confirm these allocations? Enter 'yes' to confirm, anything else to re-enter: ")
-            if confirm.lower() != 'yes':
-                allocation_percentages = {}
 
         return allocation_percentages
     
