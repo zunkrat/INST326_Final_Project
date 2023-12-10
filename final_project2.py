@@ -63,23 +63,24 @@ class IncomeAllocator:
         
         self.bank_accounts = {}
         self.total_income = float(pay_stub_info.net_pay)
-        self.checking_percent = checking_percent
-        self.savings_percent = savings_percent
 
-    def check_percentage(self):
-        """Check if the percentage is valid
-        
-        Returns:
-            float: allocating percentage to checking and savings account.
-            
-        Raise:
-            ValueError: Percentage has to be within 0 to 1.
-        """
-        
-        if 0 <= self.checking_percent <= 1 and 0 <= self.savings_percent <= 1:
-            return self.checking_percent, self.savings_percent
+        if 0 <= checking_percent <= 1 and 0 <= savings_percent <= 1:
+            self.checking_percent = checking_percent
+            self.savings_percent = savings_percent
         else:
             raise ValueError("Percentage has to be within 0 to 1")
+
+    def check_percentage(self):
+        """Check if the percentage is added up to 1
+        
+        Raises:
+            ValueError: Percentage has to be within 0 to 1.
+        """
+        if self.checking_percent + self.savings_percent == 1:
+            self.checking_percent = self.checking_percent
+            self.savings_percent = self.savings_percent
+        else:
+            raise ValueError("Checking percent and savings percent must equal to 1")
 
     def calculator(self):
         """Calculate and allocate income to checking and savings accounts.
