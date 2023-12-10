@@ -146,6 +146,28 @@ class IncomeAllocator:
                 allocation_percentages = {}
 
         return allocation_percentages
+    
+    def get_percentage_input(self, prompt):
+        """
+        Helper function to get a valid percentage input from the user.
+
+        Args:
+            prompt (str): The prompt to display.
+
+        Returns:
+            float: The valid percentage entered by the user.
+        """
+        while True:
+            try:
+                percentage = input(prompt)
+                percentage = float(percentage.rstrip('%'))
+
+                if 0 <= percentage <= 100:
+                    return percentage
+                else:
+                    print("Enter a valid number between 0 and 100.")
+            except ValueError:
+                print("Invalid input. Enter a number between 0 and 100.")
 
 def main():
     """Calculate the amount to deposit into checking and savings account using the percentage from users and income read from the paystub.
