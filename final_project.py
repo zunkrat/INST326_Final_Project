@@ -6,10 +6,10 @@ import pandas as pd
 class PayStubExtraction:
     patterns = {
         'Direct Deposit Date': r'Paid by DIRECT DEPOSIT on (\d{2}-\d{2}-\d{4})',
-        'Employee Full Name': r'(\w+ \w+ \w+)  \n',
-        'Current Earnings': r'Earnings\n-\nTaxes\n-\nDeductions\n=\nNet Pay\nCurrent\n\s+(\d+\.\d{2})',
-        'Current Taxes': r'Earnings\n-\nTaxes\n-\nDeductions\n=\nNet Pay\nCurrent\n\s+\d+\.\d{2}\n\s+(\d+\.\d{2})',
-        'Net Pay': r'Net Pay\nCurrent\n\s+\d+\.\d{2}\n\s+\d+\.\d{2}\n.+\n\s+(\d+\.\d{2})'
+        'Employee Full Name': r'^(?:[^\n]*\n){2}([^\n]+)',
+        'Current Earnings': r'CURRENT\s*[\s\S]*?(\d+,\d+\.\d{2})',
+        'Current Taxes': r'TAXES/DEDUCTIONS\s*[\s\S]*?CURRENT\s*[\s\S]*?(\d+\.\d{2})',
+        'Net Pay': r'Net Pay\s*[\s\S]*?(\d+,\d+\.\d{2})'
     }
 
     def __init__(self, file_path):
