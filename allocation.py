@@ -131,9 +131,15 @@ def extract_pay_stub_info(file_path): #Tulasi Venkat
         "net_pay": net_pay.group(1)
     }
 
-def allocate_money_to_categories(): # Ojie
+def user_allocation(): # Ojie
     """
-    Asks the user if they want to allocate money to categories.
+    Display a list of available categories and prompt the user to allocate a percentage
+    for each category. The user can choose to skip allocation for each category.
+    The '%' symbol is not required when entering percentages.
+
+    Returns:
+        dict: A dictionary containing the allocated percentages for each category.
+              The keys are category names, and the values are the corresponding percentages.
     """
 
     while True:
@@ -189,7 +195,7 @@ def allocate_money_to_categories(): # Ojie
         if confirm.lower() == 'yes':
             break
 
-allocate_money_to_categories()
+user_allocation()
 
     
 
