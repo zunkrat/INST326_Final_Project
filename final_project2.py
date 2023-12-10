@@ -2,6 +2,7 @@ from argparse import ArgumentParser
 import sys
 import re
 import pandas as pd
+import matplotlib.pyplot as plt
 
 class PayStubExtraction:
     """Class that extracts specific information from an uploaded paystub.
@@ -224,6 +225,13 @@ def main():
     income_allocator.user_allocation()
 
     dic_csv(deposit)
+    
+    try:
+        recent_income()
+    
+    except Exception as e:
+        print(f"Error {e}")
+
     return deposit
 
 def parse_args(arglist):
@@ -262,13 +270,53 @@ def dic_csv(dictionary):
     csv_file_path = 'bank.csv'
 
     try:
-        with open(csv_file_path, 'a', newline = '') as file:
-            df.to_csv(file, index = False, header = None)
+        with open(csv_file_path, 'r', newline = '') as file:
+            existing_data = file.read()
+
+        if not existing_data:
+            df.to_csv(csv_file_path, index = False)
             
-    except:
-        with open(csv_file_path, 'w', newline = '') as file:
-            df.to_csv(file, index = False)
-            
+        else:
+            with open(csv_file_path, 'a', newline = '') as file:
+                df.to_csv(file, index = False, header = False)
+
+    except Exception as e:
+        print(f"Error writing to CSV file: {e}")
+                
+def recent_income(csv_file = 'bank.csv', num_rows = 10):
+    """
+    Plot the sum of checking and savings for the specified number of most recent paystubs from a CSV file.
+
+    Args:
+        csv_file (str): Path to the CSV file containing paystub data.
+        num_rows (int): Number of most recent paystubs to include in the plot.
+
+    Returns:
+        None
+    """
+    try:
+        df = pd.read_csv(csv_file)
+    except FileNotFoundError:
+        print(f"File {csv_file} not found. Creating a new file.")
+        df = pd.DataFrame(columns=['checking', 'savings', 'deposit date'])
+        df.to_csv(csv_file, index=False)
+
+    df['Net Pay'] = df['checking'] + df['savings']
+    
+    selected_columns = ['deposit date', 'Net Pay']
+    df = df[selected_columns]
+    df['deposit date'] = pd.to_datetime(df['deposit date'], format = '%m-%d-%Y')
+    df = df.sort_values(by = 'deposit date', ascending = False)
+    recent_rows = df.head(num_rows)
+
+    plt.figure(figsize = (10, 6))
+    plt.bar(recent_rows['deposit date'], recent_rows['Net Pay'], color = 'blue')
+    plt.xlabel('Deposit Date')
+    plt.ylabel('Net Pay (Checking + Savings)')
+    plt.title(f'Sum of Checking and Savings for the Last {num_rows} Deposits')
+    plt.xticks(rotation = 45)
+    plt.tight_layout()
+    plt.show()
 
 if __name__ == "__main__":
     main()
