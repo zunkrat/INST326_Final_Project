@@ -116,7 +116,7 @@ class IncomeAllocator:
         allocate = input("Do you want to allocate money to any of the above categories? Enter 'yes' (or anything else to exit): ")
 
         if allocate.lower() == 'yes':
-            checking_amount = self.total_income * self.checking_percent
+            checking_amount = round((self.total_income * self.checking_percent), 2)
             print(f"Total amount available in checking based on checking percent ({self.checking_percent * 100}%): {checking_amount}")
             print("You will enter a percentage for each category. The '%' symbol is not required.")
             total_percentage = 0
@@ -143,7 +143,7 @@ class IncomeAllocator:
 
             print("Allocations:")
             for category, percentage in allocation_percentages.items():
-                allocated_amount = (percentage / 100) * checking_amount
+                allocated_amount = round(((percentage / 100) * checking_amount), 2)
                 print(f"{category}: {percentage}% - Allocated Amount: {allocated_amount}")
 
         return allocation_percentages
