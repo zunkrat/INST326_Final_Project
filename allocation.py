@@ -58,81 +58,9 @@ class IncomeAllocator:
         self.bank_accounts["savings"] = money_to_savings if isinstance(money_to_savings, (float)) else float(money_to_savings)
 
         return self.bank_accounts
-
-def get_income_from_paystub():
-    # Replace this function with Tulasi's function later.
-    return 1500 # 1500 is just example income
-
-def main():
-    """Calculate the amount to deposit into checking and savings account using the percentage from users and income read from the paystub.
     
-    Args:
-        checking_percent: percentage set by the user to allocate income to checking account.
-        savings_percent: percentage set by the user to allocate income to savings account.
-        income (float): Total income amount obtained from the paystub. A default value obtained from the paystub using the get_income_from_paystub() function.
-    
-    Returns:
-        dict: the deposit amount to checking and savings account.
-    """
-    
-    args = parse_args(sys.argv[1:])
-
-    income_allocator = IncomeAllocator(args.income, args.checking_percent, args.savings_percent)
-    deposit = income_allocator.calculator()
-
-    return deposit
-
-def parse_args(arglist):
-    """ Parse command-line arguments.
-    
-    Expect three mandatory arguments:
-        - checking_percent: percentage set by the user to allocate income to checking account.
-        - savings_percent: percentage set by the user to allocate income to savings account.
-        - income (float): Total income amount obtained from the paystub. A default value obtained from the paystub using the get_income_from_paystub() function.
-    
-    Args:
-        arglist (list of str): arguments from the command line.
-    
-    Returns:
-        namespace: the parsed arguments, as a namespace.
-    """
-        
-    parser = ArgumentParser()
-    parser.add_argument("checking_percent", type=float, help="Percentage for checking")
-    parser.add_argument("savings_percent", type=float, help="Percentage for savings")
-    parser.set_defaults(income = get_income_from_paystub())
-
-    return parser.parse_args(arglist)
-    
-if __name__ == "__main__":
-    deposit = main()
-    print(deposit) # To see if the code is working. Delete this line later. If you want to test, copy just IncomeAllocator class to new python file and run it.
-
-def extract_pay_stub_info(file_path): #Tulasi Venkat
-    
-    #assumes that the file is a text file
-    with open(file_path, 'r') as file:
-        text = file.read()
-        
-    date_paid_regex = r"Date Paid: (\d{2}/\d{2}/\d{4})"
-    gross_pay_regex = r"Gross Pay: \$(\d+.\d{2})"
-    deductions_regex = r"Total Deductions: \$(\d+.\d{2})"
-    net_pay_regex = r"Net Pay: \$(\d+.\d{2})"
-
-    date_paid = re.search(date_paid_regex, text)
-    gross_pay = re.search(gross_pay_regex, text)
-    deductions = re.search(deductions_regex, text)
-    net_pay = re.search(net_pay_regex, text)
-
-    pay_stub_data = {
-        "date_paid": date_paid.group(1),
-        "gross_pay": gross_pay.group(1),
-        "deduction": deductions.group(1),
-        "net_pay": net_pay.group(1)
-    }
-
-def user_allocation(): # Ojie
-    """
+    def user_allocation(self): # Ojie
+        """
     Display a list of available categories and prompt the user to allocate a percentage
     for each category. The user can choose to skip allocation for each category.
     The '%' symbol is not required when entering percentages.
@@ -195,7 +123,82 @@ def user_allocation(): # Ojie
         if confirm.lower() == 'yes':
             break
 
-user_allocation()
+def get_income_from_paystub():
+    # Replace this function with Tulasi's function later.
+    return 1500 # 1500 is just example income
+
+def main():
+    """Calculate the amount to deposit into checking and savings account using the percentage from users and income read from the paystub.
+    
+    Args:
+        checking_percent: percentage set by the user to allocate income to checking account.
+        savings_percent: percentage set by the user to allocate income to savings account.
+        income (float): Total income amount obtained from the paystub. A default value obtained from the paystub using the get_income_from_paystub() function.
+    
+    Returns:
+        dict: the deposit amount to checking and savings account.
+    """
+    
+    args = parse_args(sys.argv[1:])
+
+    income_allocator = IncomeAllocator(args.income, args.checking_percent, args.savings_percent)
+    deposit = income_allocator.calculator()
+    user_allocation()
+
+
+    return deposit
+
+def parse_args(arglist):
+    """ Parse command-line arguments.
+    
+    Expect three mandatory arguments:
+        - checking_percent: percentage set by the user to allocate income to checking account.
+        - savings_percent: percentage set by the user to allocate income to savings account.
+        - income (float): Total income amount obtained from the paystub. A default value obtained from the paystub using the get_income_from_paystub() function.
+    
+    Args:
+        arglist (list of str): arguments from the command line.
+    
+    Returns:
+        namespace: the parsed arguments, as a namespace.
+    """
+        
+    parser = ArgumentParser()
+    parser.add_argument("checking_percent", type=float, help="Percentage for checking")
+    parser.add_argument("savings_percent", type=float, help="Percentage for savings")
+    parser.set_defaults(income = get_income_from_paystub())
+
+    return parser.parse_args(arglist)
+    
+if __name__ == "__main__":
+    deposit = main()
+    print(deposit) # To see if the code is working. Delete this line later. If you want to test, copy just IncomeAllocator class to new python file and run it.
+
+def extract_pay_stub_info(file_path): #Tulasi Venkat
+    
+    #assumes that the file is a text file
+    with open(file_path, 'r') as file:
+        text = file.read()
+        
+    date_paid_regex = r"Date Paid: (\d{2}/\d{2}/\d{4})"
+    gross_pay_regex = r"Gross Pay: \$(\d+.\d{2})"
+    deductions_regex = r"Total Deductions: \$(\d+.\d{2})"
+    net_pay_regex = r"Net Pay: \$(\d+.\d{2})"
+
+    date_paid = re.search(date_paid_regex, text)
+    gross_pay = re.search(gross_pay_regex, text)
+    deductions = re.search(deductions_regex, text)
+    net_pay = re.search(net_pay_regex, text)
+
+    pay_stub_data = {
+        "date_paid": date_paid.group(1),
+        "gross_pay": gross_pay.group(1),
+        "deduction": deductions.group(1),
+        "net_pay": net_pay.group(1)
+    }
+
+
+
 
     
 
