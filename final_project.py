@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 import sys
 import re
+import pandas as pd
 
 class PayStubExtraction:
     patterns = {
@@ -123,6 +124,23 @@ def parse_args(arglist):
 
     return parser.parse_args(arglist)
 
+def dic_csv(dictionary):
+    """Transforms the dictionary of the bank accounts into a csv file.
+    
+    Args:
+        dictionary: bank account dictionary (checking account and savings account).
+    
+    Side effects:
+        csv_file: bank csv file that contain checking account and savings account balance will be created.
+    """
+    
+    df = pd.DataFrame([dictionary])
+    df.to_csv('bank.csv', index = False)
+    
 if __name__ == "__main__":
-    deposit = main()
-    print(deposit)  # To see if the code is working. Delete this line later.
+    args = parse_args(sys.argv[1:])
+    pay_stub_info = PayStubExtraction(args.filepath)
+    income_allocator = IncomeAllocator(pay_stub_info, args.checking_percent, args.savings_percent)
+    deposit = income_allocator.calculator()
+    
+    dic_csv(deposit)
