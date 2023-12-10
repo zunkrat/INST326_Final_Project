@@ -263,11 +263,12 @@ def dic_csv(dictionary):
 
     try:
         with open(csv_file_path, 'a', newline = '') as file:
-            df.to_csv(file, index = False)
+            df.to_csv(file, index = False, header = None)
             
     except:
         with open(csv_file_path, 'w', newline = '') as file:
             df.to_csv(file, index = False)
+            
 
 if __name__ == "__main__":
     main()
