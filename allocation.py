@@ -147,7 +147,7 @@ def user_allocation(): # Ojie
         allocation_percentages = {}
 
         print("Available Categories:")
-        print(", ".join(categories))  # Display categories as a comma-separated list
+        print(", ".join(categories))  
 
         allocate = input("Do you want to allocate money to any of the above categories? Enter 'yes': ")
 
