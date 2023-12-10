@@ -131,36 +131,66 @@ def extract_pay_stub_info(file_path): #Tulasi Venkat
         "net_pay": net_pay.group(1)
     }
 
-def user_allocation(): #Ojie
-    
+def allocate_money_to_categories(): # Ojie
+    """
+    Asks the user if they want to allocate money to categories.
+    """
+
     while True:
-        categories = frozenset(['Entertainment', 'Groceries', 'Housing', 'Utilities', 'Travel', 'Recreation', 'Transportation', 'Other'])    
+        categories = frozenset(['Entertainment', 'Groceries', 'Housing', 'Utilities', 'Travel', 'Recreation', 'Transportation', 'Other'])
         allocation_percentages = {}
-    
+
         print("Available Categories:")
-        for category in categories:
-            print(category)
-        
+        print(", ".join(categories))  # Display categories as a comma-separated list
+
         allocate = input("Do you want to allocate money to any of the above categories? Enter 'yes': ")
 
         if allocate.lower() != 'yes':
             break
-    
-        print("You will enter a percentage for each category, the '%' symbol is not required.")
-        for category in categories:
-            while True:
-                try:
-                    percentage = input(f"Enter a percetage for {category}: ")
-                    percentage = float(percentage.rstrip('%'))
-            
-                    if(0<= percentage <=100):
-                        allocation_percentages[category] = (percentage)
-                        break
-                        
-                    else:
-                        print("Enter a valid number between 0 and 100.")
-                except ValueError:
-                    print("Invalid input. Enter a number between 0 and 100.")
+
+        print("You will enter a percentage for each category. The '%' symbol is not required.")
+        total_percentage = 0
+
+        while True:
+            category = input("Enter the category you want to add to (or 'end' to finish): ").capitalize()
+
+            if category.lower() == 'end':
+                break
+
+            if category in categories:
+                while True:
+                    try:
+                        percentage = input(f"Enter a percentage for {category}: ")
+                        percentage = float(percentage.rstrip('%'))
+
+                        if 0 <= percentage <= 100:
+                            if total_percentage + percentage > 100:
+                                print(f"Total percentage will exceed 100%. Current total: {total_percentage}%")
+                            else:
+                                allocation_percentages[category] = percentage
+                                total_percentage += percentage
+                                break
+                        else:
+                            print("Enter a valid number between 0 and 100.")
+                    except ValueError:
+                        print("Invalid input. Enter a number between 0 and 100.")
+            else:
+                print("Invalid category. Please choose from the available categories.")
+
+        if total_percentage == 100:
+            print("Total percentage reached 100%. Allocation completed.")
+            break
+
+        print("Allocations:")
+        for category, percentage in allocation_percentages.items():
+            print(f"{category}: {percentage}%")
+
+        confirm = input("Do you want to confirm these allocations? Enter 'yes' to confirm, anything else to re-enter: ")
+        if confirm.lower() == 'yes':
+            break
+
+allocate_money_to_categories()
+
     
 
 
