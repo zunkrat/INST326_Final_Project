@@ -96,6 +96,69 @@ class IncomeAllocator:
         self.bank_accounts["savings"] = money_to_savings if isinstance(money_to_savings, float) else float(money_to_savings)
 
         return self.bank_accounts
+    
+    def user_allocation(self): 
+        """
+            Display a list of available categories and prompt the user to allocate a percentage
+            for each category. 
+
+    Returns:
+            dict: A dictionary containing the allocated percentages for each category.
+            The keys are category names, and the values are the corresponding percentages.
+    """
+
+    while True:
+        categories = frozenset(['Entertainment', 'Groceries', 'Housing', 'Utilities', 'Travel', 'Recreation', 'Transportation', 'Other'])
+        allocation_percentages = {}
+
+        print("Available Categories:")
+        print(", ".join(categories))  
+
+        allocate = input("Do you want to allocate money to any of the above categories? Enter 'yes'(or anything else to exit): ")
+
+        if allocate.lower() != 'yes':
+            break
+
+        print("You will enter a percentage for each category. The '%' symbol is not required.")
+        total_percentage = 0
+
+        while True:
+            category = input("Enter the category you want to add to (or 'end' to finish): ").capitalize()
+
+            if category.lower() == 'end':
+                break
+
+            if category in categories:
+                while True:
+                    try:
+                        percentage = input(f"Enter a percentage for {category}: ")
+                        percentage = float(percentage.rstrip('%'))
+
+                        if 0 <= percentage <= 100:
+                            if total_percentage + percentage > 100:
+                                print(f"Total percentage will exceed 100%. Current total: {total_percentage}%")
+                            else:
+                                allocation_percentages[category] = percentage
+                                total_percentage += percentage
+                                break
+                        else:
+                            print("Enter a valid number between 0 and 100.")
+                    except ValueError:
+                        print("Invalid input. Enter a number between 0 and 100.")
+            else:
+                print("Invalid category. Please choose from the available categories.")
+
+        if total_percentage == 100:
+            print("Total percentage reached 100%. Allocation completed.")
+            break
+
+        print("Allocations:")
+        for category, percentage in allocation_percentages.items():
+            print(f"{category}: {percentage}%")
+
+        confirm = input("Do you want to confirm these allocations? Enter 'yes' to confirm, anything else to re-enter: ")
+        if confirm.lower() == 'yes':
+            break
 
 def main():
     """Calculate the amount to deposit into checking and savings account using the percentage from users and income read from the paystub.
@@ -146,6 +209,7 @@ def main():
     
     income_allocator = IncomeAllocator(pay_stub_info, checking_percent, savings_percent)
     deposit = income_allocator.calculator()
+    income_allocator.user_allocation()
 
     # Output the result
     print(f"Allocated amounts: {deposit}")
