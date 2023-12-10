@@ -55,9 +55,9 @@ def main():
 
 def parse_args(arglist):
     parser = ArgumentParser()
-    parser.add_argument("filepath", type=str, help="Path to the pay stub file", default="converted_pay_stub.txt")
-    parser.add_argument("checking_percent", type=float, help="Percentage for checking")
-    parser.add_argument("savings_percent", type=float, help="Percentage for savings")
+    parser.add_argument("filepath", type = str, help = "Path to the pay stub file", default="converted_pay_stub.txt")
+    parser.add_argument("checking_percent", type = float, help = "Percentage for checking")
+    parser.add_argument("savings_percent", type = float, help = "Percentage for savings")
 
     return parser.parse_args(arglist)
 
