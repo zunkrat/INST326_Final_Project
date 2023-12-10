@@ -121,13 +121,13 @@ def extract_pay_stub_info(file_path): #Tulasi Venkat
 
     date_paid = re.search(date_paid_regex, text)
     gross_pay = re.search(gross_pay_regex, text)
-    deductions = re.search(deduction_regex, text)
+    deductions = re.search(deductions_regex, text)
     net_pay = re.search(net_pay_regex, text)
 
     pay_stub_data = {
-        "date_paid": date_paid.group(1)
-        "gross_pay": gross_pay.group(1)
-        "deduction": deductions.group(1)
+        "date_paid": date_paid.group(1),
+        "gross_pay": gross_pay.group(1),
+        "deduction": deductions.group(1),
         "net_pay": net_pay.group(1)
     }
 
