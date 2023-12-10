@@ -249,9 +249,26 @@ def dic_csv(dictionary):
     Side effects:
         csv_file: bank csv file that contain checking account and savings account balance will be created.
     """
-    
+def dic_csv(dictionary):
+    """Appends the dictionary of the bank accounts to a CSV file.
+
+    Args:
+        dictionary: bank account dictionary (checking account and savings account).
+
+    Side effects:
+        csv_file: bank csv file that contains checking account and savings account balances will be created or appended.
+    """
     df = pd.DataFrame([dictionary])
-    df.to_csv('bank.csv', index = False)
+
+    try:
+        with open('bank.csv', 'a', newline = '') as file:
+
+            df.to_csv(file, index=False)
+            
+    except FileNotFoundError:
+
+        with open('bank.csv', 'w', newline = '') as file:
+            df.to_csv(file, index=False)
     
 if __name__ == "__main__":
     main()
