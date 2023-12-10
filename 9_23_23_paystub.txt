@@ -1,0 +1,79 @@
+Employee's Earnings Statement
+Employee's Earnings Statement
+CHRISTIAN PETER BECHMANN
+9700 SKYHILL WAY APT 307
+ROCKVILLE
+MD 20850
+UNIVERSITY OF MARYLAND
+State Agency Cd : 360222
+Paid by DIRECT DEPOSIT on 09-29-2023
+Dept Seq #
+13311
+Fed.Mar.Stat.
+S
+EARNINGS
+Pay Period Ending Date
+09-23-2023
+Fed.Ex.
+0
+Additional Fed.Tax
+.00
+CURRENT
+.00
+3,302.18
+511.88
+5,872.77
+*ST PD BENEFITS
+Page 1
+Employee's Earnings Statement
+FICA/MED SUBSIDY
+.00
+Earnings
+Current
+Year To Date
+St.Ex.
+0
+Additional St.Tax
+.00
+TAXES/DEDUCTIONS
+YEAR TO DATE
+REGULAR
+FICA EX WAGES
+St.Mar.Stat
+S
+Check/Advice Number
+52042092
+County Code
+MO
+CURRENT
+YEAR TO DATE
+FEDERAL TAX
+.00
+98.80
+FICA/MED TAX
+Page 2
+Employee's Earnings Statement
+.00
+252.62
+STATE TAXES
+34.58
+610.29
+DIR/DEP-CHCKNG
+477.30
+8,213.24
+252.62
+-
+Taxes
+-
+Deductions
+=
+Net Pay
+511.88
+34.58
+.00
+477.30
+9,174.95
+961.71
+.00
+8,213.24
+Page 3
