@@ -213,17 +213,14 @@ def main():
         current_earnings = extracted_info['Current Earnings'],
         current_taxes = extracted_info['Current Taxes'],
         net_pay = extracted_info['Net Pay']
-                                    
     )
     
     income_allocator = IncomeAllocator(pay_stub_info, checking_percent, savings_percent)
     deposit = income_allocator.calculator()
-    income_allocator.user_allocation()
-
-    # Output the result
+    deposit['deposit date'] = pay_stub_info.direct_deposit_date
+    
     print(f"Allocated amounts: {deposit}")
 
-    # Save the result to a CSV file
     dic_csv(deposit)
     return deposit
 
@@ -250,15 +247,6 @@ def parse_args(arglist):
     return parser.parse_args(arglist)
 
 def dic_csv(dictionary):
-    """Transforms the dictionary of the bank accounts into a csv file.
-    
-    Args:
-        dictionary: bank account dictionary (checking account and savings account).
-    
-    Side effects:
-        csv_file: bank csv file that contain checking account and savings account balance will be created.
-    """
-def dic_csv(dictionary):
     """Appends the dictionary of the bank accounts to a CSV file.
 
     Args:
@@ -269,15 +257,15 @@ def dic_csv(dictionary):
     """
     df = pd.DataFrame([dictionary])
 
+    csv_file_path = 'bank.csv'
+
     try:
-        with open('bank.csv', 'a', newline = '') as file:
-
-            df.to_csv(file, index=False)
+        with open(csv_file_path, 'a', newline = '') as file:
+            df.to_csv(file, index = False)
             
-    except FileNotFoundError:
+    except:
+        with open(csv_file_path, 'w', newline = '') as file:
+            df.to_csv(file, index = False)
 
-        with open('bank.csv', 'w', newline = '') as file:
-            df.to_csv(file, index=False)
-    
 if __name__ == "__main__":
     main()
