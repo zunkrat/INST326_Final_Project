@@ -220,6 +220,7 @@ def main():
     deposit['deposit date'] = pay_stub_info.direct_deposit_date
     
     print(f"Allocated amounts: {deposit}")
+    income_allocator.user_allocation()
 
     dic_csv(deposit)
     return deposit
