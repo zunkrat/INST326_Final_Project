@@ -13,6 +13,8 @@ class PayStubExtraction:
         current_earnings (str): the current earnings from the payment period
         current_taxes (str): the amount of current taxes from the payment period
         net_pay (str): the total amount the employee is paid
+
+    Primary Author of Class: Tulasi Venkat
     """
     def __init__(self, direct_deposit_date, employee_full_name, current_earnings, current_taxes, net_pay):
         """Initializes PayStubExtraction with the attributes.
@@ -31,6 +33,20 @@ class PayStubExtraction:
         self.net_pay = net_pay
     
     def extract_paystub_info(self, paystub_text):
+        """Extracts direct deposit date, employee name, current earnings, current taxes, 
+        and net pay from the paystub text. It uses regular expressions to identify and extract that 
+        information and creates a dictionary with the previously mentioned data.
+        
+        Args: 
+            paystub_text (str): A string that contains the text from the paystub
+        
+        Returns:
+            dict: Dictionary with the keys 'Direct Deposit Date', 'Employee Full Name', 'Current Earnings', 
+                'Current Taxes', and 'Net Pay', which are mapped to their corresponding extracted value from the paystub.
+        
+        Primary Author of Method: Tulasi Venkat
+        Technique: Regular Expressions
+        """
         patterns = {
             'Direct Deposit Date': r'Paid by DIRECT DEPOSIT on (\d{2}-\d{2}-\d{4})',
             'Employee Full Name': r'^(?:[^\n]*\n){2}([^\n]+)',
@@ -46,6 +62,19 @@ class PayStubExtraction:
         return extracted_info
     
     def extract_from_file(self, filepath):
+        """Reads in a paystub file and extracts the key information. It opens the filepath containing the paystub,
+        reads in the content, and calls the extract_paystub_info method to extract the data.
+        
+        Args:
+            filepath (str): the path to the file containing the paystub
+            
+        Returns: 
+            dict: Dictionary with the keys 'Direct Deposit Date', 'Employee Full Name', 'Current Earnings', 
+                'Current Taxes', and 'Net Pay', which are mapped to their corresponding extracted value from the paystub.
+       
+        Primary Author of Method: Tulasi Venkat
+        Technique: with statement
+        """
         with open(filepath, 'r') as file:
             text_content = file.read()
             
