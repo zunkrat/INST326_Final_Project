@@ -53,10 +53,9 @@ class IncomeAllocator:
         Initialize the IncomeAllocator object.
 
         Args:
-            total_income (float): Total income amount.
+            pay_stub_info (dict): Paystub information.
             checking_percent (float): Percentage of the total income allocated to the checking account.
             savings_percent (float): Percentage of the total income allocated to the savings account.
-            bank_accounts (dict): Dictionary to store allocated amounts in checking and savings accounts.
             
         Side effects:
             Create IncomeAllocator attributes.
