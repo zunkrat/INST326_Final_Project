@@ -296,10 +296,11 @@ def recent_income(csv_file = 'bank.csv', num_rows = 10):
     """
     try:
         df = pd.read_csv(csv_file)
+        
     except FileNotFoundError:
-        print(f"File {csv_file} not found. Creating a new file.")
-        df = pd.DataFrame(columns=['checking', 'savings', 'deposit date'])
-        df.to_csv(csv_file, index=False)
+        print(f"File {csv_file} not found. Creating a new file. Please try it again.")
+        df = pd.DataFrame(columns = ['checking', 'savings', 'deposit date'])
+        df.to_csv(csv_file, index = False)
 
     df['Net Pay'] = df['checking'] + df['savings']
     
