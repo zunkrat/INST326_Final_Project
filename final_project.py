@@ -91,8 +91,7 @@ class IncomeAllocator:
     """
     
     def __init__(self, pay_stub_info, checking_percent, savings_percent):
-        """
-        Initialize the IncomeAllocator object.
+        """Initialize the IncomeAllocator object.
 
         Args:
             pay_stub_info (dict): Paystub information.
@@ -229,6 +228,7 @@ def main():
         filepath = args.filepath
         checking_percent = args.checking_percent
         savings_percent = args.savings_percent
+        
     else:
         # Gets user inputs 
         filepath = input("Enter the path to your paystub file: ")
@@ -238,8 +238,9 @@ def main():
         # Validates the input percentages
         if not 0 <= checking_percent <= 1 or not 0 <= savings_percent <= 1:
             raise ValueError("Percentages must be between 0 and 100")
+    
+    extractor = PayStubExtraction('','','','','')
         
-    extractor = PayStubExtraction()
     extracted_info = extractor.extract_from_file(filepath)
          
     #Creates the PayStubExtraction object
@@ -259,6 +260,13 @@ def main():
     income_allocator.user_allocation()
 
     dic_csv(deposit)
+    
+    
+    file_path = 'bank.csv'
+    df = pd.read_csv(file_path)
+    total_amount_saved = total_saved(df)
+    
+    print(f'Total Amount Saved (Savings Account): ${total_amount_saved:.2f}')
     
     try:
         recent_income()
@@ -367,11 +375,6 @@ def total_saved(dataframe):
     dataframe['Cumulative Savings'] = dataframe['savings'].cumsum()
     total_amount_saved = dataframe['Cumulative Savings'].iloc[-1]
     return total_amount_saved
-
-file_path = 'bank.csv'
-df = pd.read_csv(file_path)
-total_amount_saved = total_saved(df)
-print(f'Total Amount Saved: ${total_amount_saved:.2f}')
 
 if __name__ == "__main__":
     main()
