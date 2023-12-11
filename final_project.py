@@ -29,14 +29,27 @@ class PayStubExtraction:
         self.current_earnings = current_earnings
         self.current_taxes = current_taxes
         self.net_pay = net_pay
-        
-    patterns = {
-        'Direct Deposit Date': r'Paid by DIRECT DEPOSIT on (\d{2}-\d{2}-\d{4})',
-        'Employee Full Name': r'^(?:[^\n]*\n){2}([^\n]+)',
-        'Current Earnings': r'CURRENT\s*[\s\S]*?(\d+,\d+\.\d{2})',
-        'Current Taxes': r'TAXES/DEDUCTIONS\s*[\s\S]*?CURRENT\s*[\s\S]*?(\d+\.\d{2})',
-        'Net Pay': r'Net Pay\s*[\s\S]*?(\d+,\d+\.\d{2})'
-    }
+    
+    def extract_paystub_info(self, paystub_text):
+        patterns = {
+            'Direct Deposit Date': r'Paid by DIRECT DEPOSIT on (\d{2}-\d{2}-\d{4})',
+            'Employee Full Name': r'^(?:[^\n]*\n){2}([^\n]+)',
+            'Current Earnings': r'CURRENT\s*[\s\S]*?(\d+,\d+\.\d{2})',
+            'Current Taxes': r'TAXES/DEDUCTIONS\s*[\s\S]*?CURRENT\s*[\s\S]*?(\d+\.\d{2})',
+            'Net Pay': r'Net Pay\s*[\s\S]*?(\d+,\d+\.\d{2})'
+        }
+        extracted_info = {}
+        for key, pattern in patterns.items():
+            match = re.search(pattern, paystub_text)
+            extracted_info[key] = match.group(1) if match else None
+            
+        return extracted_info
+    
+    def extract_from_file(self, filepath):
+        with open(filepath, 'r') as file:
+            text_content = file.read()
+            
+        return self.extract_paystub_info(text_content)
 
 class IncomeAllocator:
     """Class for managing income allocation to checking and savings accounts.
@@ -62,7 +75,7 @@ class IncomeAllocator:
         """
         
         self.bank_accounts = {}
-        self.total_income = float(pay_stub_info.net_pay)
+        self.total_income = float(pay_stub_info.net_pay.replace(',', ''))
 
         if 0 <= checking_percent <= 1 and 0 <= savings_percent <= 1:
             self.checking_percent = checking_percent
@@ -197,15 +210,8 @@ def main():
         if not 0 <= checking_percent <= 1 or not 0 <= savings_percent <= 1:
             raise ValueError("Percentages must be between 0 and 100")
         
-    #Processes the pay stub    
-    with open(filepath, 'r') as file:
-        text_content = file.read()
-    extracted_info = {key: re.search(pattern, text_content).group(1) for key, pattern in PayStubExtraction.patterns.items() if re.search(pattern, text_content)}
-    
-    #Gets rid of commas in the numbers as strings
-    extracted_info['Current Earnings'] = extracted_info['Current Earnings'].replace(',', '')
-    extracted_info['Current Taxes'] = extracted_info['Current Taxes'].replace(',', '')
-    extracted_info['Net Pay'] = extracted_info['Net Pay'].replace(',', '')
+    extractor = PayStubExtraction()
+    extracted_info = extractor.extract_from_file(filepath)
          
     #Creates the PayStubExtraction object
     pay_stub_info = PayStubExtraction(
