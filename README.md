@@ -6,8 +6,6 @@
         8_26_23_paystub.txt, 9_23_23_paystub.txt]: 
         These are text files of Christian's paystubs from the corresponding dates in the format that was             used to create the regular expressions, so extraction from other paystubs with a different format            might not be accurate.
 
-        LICENSE:
-
         README.md:
         bank.csv:
         final_project.py:
