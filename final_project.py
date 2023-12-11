@@ -318,5 +318,25 @@ def recent_income(csv_file = 'bank.csv', num_rows = 10):
     plt.tight_layout()
     plt.show()
 
+
+def total_saved(dataframe): 
+    """
+    Calculate the total amount saved based on the cumulative savings allocation column in the DataFrame.
+
+    Args:
+        dataframe (pd.DataFrame): DataFrame containing paystub data.
+
+    Returns:
+        float: Total amount saved.
+    """
+    dataframe['Cumulative Savings'] = dataframe['savings'].cumsum()
+    total_amount_saved = dataframe['Cumulative Savings'].iloc[-1]
+    return total_amount_saved
+
+file_path = 'bank.csv'
+df = pd.read_csv(file_path)
+total_amount_saved = total_saved(df)
+print(f'Total Amount Saved: ${total_amount_saved:.2f}')
+
 if __name__ == "__main__":
     main()
