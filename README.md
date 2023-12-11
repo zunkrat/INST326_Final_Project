@@ -30,8 +30,8 @@
     | func main                |                |                                                         |
     | func parse_args          |                |                                                         |
     | func dic_csv             |                |                                                         |
-    | func recent_income       |                |                                                         |
-    | func total_saved         |                |                                                         |
+    | func recent_income       | Christian      | visualizing data with pyplot or seaborn                 |
+    | func total_saved         | Christian      | filtering operations using Pandas                       |
 
 
 
