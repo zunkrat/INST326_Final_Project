@@ -23,8 +23,7 @@
     | Method/Function          | Primary Author | Techniques Demonstrated                                 |
     |--------------------------|----------------|---------------------------------------------------------|
     | func extract_paystub_info| Tulasi         | regular expressions                                     |
-    | func extract_from_file   | Tulasi         | 'with' statemets                                        | 
-    | func check_percentage    | Gwon           |                                                         |
+    | func extract_from_file   | Tulasi         | 'with' statemets                                        |
     | func calculator          | Gwon           | conditional expressions                                 |
     | func user_allocation     | Ojie           | Set operations on sets or frozensets                    |
     | func get_percentage_input| Ojie           | Optional parameters and/or keyword arguments            |
