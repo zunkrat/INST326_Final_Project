@@ -23,7 +23,7 @@ class PayStubExtraction:
             direct_deposit_date (str): the date on which the payment was made
             employee_full_name (str): the full name of the employee
             current_earnings (str): the current earnings from the payment period
-            current_taxes (str): the amount of current taxes from the payment period
+            current_taxes (str): the amount o11_4f current taxes from the payment period
             net_pay (str): the total amount the employee is paid
         """
         self.direct_deposit_date = direct_deposit_date
@@ -79,6 +79,8 @@ class PayStubExtraction:
             text_content = file.read()
             
         return self.extract_paystub_info(text_content)
+    
+    
 
 class IncomeAllocator:
     """Class for managing income allocation to checking and savings accounts.
@@ -146,6 +148,23 @@ class IncomeAllocator:
 
         return self.bank_accounts
     
+    def __str__(self):
+        
+        '''
+        To represent an informal string representation of the total income, checkings percent, savings percent, and
+        bank Accounts
+        
+        Primary Author of Magic Method : Andy Do
+        
+        '''
+        
+        return (
+            f'Total Income: {self.total_income}' '\n'
+            f'Checking Percent: {self.checking_percent}' '\n'
+            f'Savings Percent: {self.savings_percent}' '\n'
+            f'Bank Accounts: {self.bank_accounts}'
+        )
+    
     def user_allocation(self):
         """
         Display a list of available categories and prompt the user to allocate a percentage
@@ -196,6 +215,8 @@ class IncomeAllocator:
 
         return allocation_percentages
     
+    
+    
     def get_percentage_input(self, prompt):
         """
         Helper function to get a valid percentage input from the user.
@@ -217,6 +238,7 @@ class IncomeAllocator:
                     print("Enter a valid number between 0 and 100.")
             except ValueError:
                 print("Invalid input. Enter a number between 0 and 100.")
+                
                 
 def parse_args(arglist):
     """ Parse command-line arguments.
@@ -244,13 +266,17 @@ def parse_args(arglist):
     return parser.parse_args(arglist)
 
 def dic_csv(dictionary):
-    """Appends the dictionary of the bank accounts to a CSV file.
+    """
+    Appends the dictionary of the bank accounts to a CSV file.
 
     Args:
         dictionary: bank account dictionary (checking account and savings account).
 
     Side effects:
         csv_file: bank csv file that contains checking account and savings account balances will be created or appended.
+        
+    Primary Author for function: Andy Do
+    
     """
     df = pd.DataFrame([dictionary])
 
@@ -269,6 +295,8 @@ def dic_csv(dictionary):
 
     except Exception as e:
         print(f"Error writing to CSV file: {e}")
+        
+
                 
 def recent_income(csv_file = 'bank.csv', num_rows = 10):
     """
