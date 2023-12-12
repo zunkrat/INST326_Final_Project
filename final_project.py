@@ -100,6 +100,8 @@ class IncomeAllocator:
             
         Side effects:
             Create IncomeAllocator attributes.
+            
+        Primary Author of Method: Gwon Lee
         """
         
         self.bank_accounts = {}
@@ -116,6 +118,8 @@ class IncomeAllocator:
         
         Raises:
             ValueError: Percentage has to be within 0 to 1.
+        
+        Primary Author of Method: Gwon Lee
         """
         if self.checking_percent + self.savings_percent == 1:
             self.checking_percent = self.checking_percent
@@ -128,6 +132,9 @@ class IncomeAllocator:
         
         Returns:
             dict: the deposit amount to checking and savings account.
+
+        Primary Author of Method: Gwon Lee
+        Technique: Conditional Expressions
         """
         
         self.check_percentage()
@@ -289,6 +296,9 @@ def parse_args(arglist):
     
     Returns:
         namespace: the parsed arguments, as a namespace.
+
+    Primary Author of Method: Gwon Lee
+    Technique: The ArgumentParser class from the argparse module
     """
     
     parser = ArgumentParser()
