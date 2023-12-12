@@ -217,72 +217,7 @@ class IncomeAllocator:
                     print("Enter a valid number between 0 and 100.")
             except ValueError:
                 print("Invalid input. Enter a number between 0 and 100.")
-
-def main():
-    """Calculate the amount to deposit into checking and savings account using the percentage from users and income read from the paystub.
-    
-    Args:
-        checking_percent: percentage set by the user to allocate income to checking account.
-        savings_percent: percentage set by the user to allocate income to savings account.
-        income (float): Total income amount obtained from the paystub. A default value obtained from the paystub using the get_income_from_paystub() function.
-    
-    Returns:
-        dict: the deposit amount to checking and savings account.
-    """
-    
-    if len(sys.argv) > 1:
-        args = parse_args(sys.argv[1:])
-        filepath = args.filepath
-        checking_percent = args.checking_percent
-        savings_percent = args.savings_percent
-        
-    else:
-        # Gets user inputs 
-        filepath = input("Enter the path to your paystub file: ")
-        checking_percent = float(input("Enter the percentage to allocate to the checking account (0-100): ")) / 100
-        savings_percent = float(input("Enter the percentage to allocate to the savings account (0-100): ")) / 100
-
-        # Validates the input percentages
-        if not 0 <= checking_percent <= 1 or not 0 <= savings_percent <= 1:
-            raise ValueError("Percentages must be between 0 and 100")
-    
-    extractor = PayStubExtraction('','','','','')
-        
-    extracted_info = extractor.extract_from_file(filepath)
-         
-    #Creates the PayStubExtraction object
-    pay_stub_info = PayStubExtraction(
-        direct_deposit_date = extracted_info['Direct Deposit Date'],
-        employee_full_name = extracted_info['Employee Full Name'],
-        current_earnings = extracted_info['Current Earnings'],
-        current_taxes = extracted_info['Current Taxes'],
-        net_pay = extracted_info['Net Pay']
-    )
-    
-    income_allocator = IncomeAllocator(pay_stub_info, checking_percent, savings_percent)
-    deposit = income_allocator.calculator()
-    deposit['deposit date'] = pay_stub_info.direct_deposit_date
-    
-    print(f"Allocated amounts: {deposit}")
-    income_allocator.user_allocation()
-
-    dic_csv(deposit)
-    
-    
-    file_path = 'bank.csv'
-    df = pd.read_csv(file_path)
-    total_amount_saved = total_saved(df)
-    
-    print(f'Total Amount Saved (Savings Account): ${total_amount_saved:.2f}')
-    
-    try:
-        recent_income()
-    
-    except Exception as e:
-        print(f"Error {e}")
-
-    return deposit
-
+                
 def parse_args(arglist):
     """ Parse command-line arguments.
     
@@ -393,4 +328,51 @@ def total_saved(dataframe):
     return total_amount_saved
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1:
+        args = parse_args(sys.argv[1:])
+        filepath = args.filepath
+        checking_percent = args.checking_percent
+        savings_percent = args.savings_percent
+        
+    else:
+        # Gets user inputs 
+        filepath = input("Enter the path to your paystub file: ")
+        checking_percent = float(input("Enter the percentage to allocate to the checking account (0-100): ")) / 100
+        savings_percent = float(input("Enter the percentage to allocate to the savings account (0-100): ")) / 100
+
+        # Validates the input percentages
+        if not 0 <= checking_percent <= 1 or not 0 <= savings_percent <= 1:
+            raise ValueError("Percentages must be between 0 and 100")
+    
+    extractor = PayStubExtraction('','','','','')
+    extracted_info = extractor.extract_from_file(filepath)
+         
+    #Creates the PayStubExtraction object
+    pay_stub_info = PayStubExtraction(
+        direct_deposit_date = extracted_info['Direct Deposit Date'],
+        employee_full_name = extracted_info['Employee Full Name'],
+        current_earnings = extracted_info['Current Earnings'],
+        current_taxes = extracted_info['Current Taxes'],
+        net_pay = extracted_info['Net Pay']
+    )
+    
+    income_allocator = IncomeAllocator(pay_stub_info, checking_percent, savings_percent)
+    deposit = income_allocator.calculator()
+    deposit['deposit date'] = pay_stub_info.direct_deposit_date
+    
+    print(f"Allocated amounts: {deposit}")
+    income_allocator.user_allocation()
+    
+    dic_csv(deposit)
+    
+    file_path = 'bank.csv'
+    df = pd.read_csv(file_path)
+    total_amount_saved = total_saved(df)
+    
+    print(f'Total Amount Saved (Savings Account): ${total_amount_saved:.2f}')
+    
+    try:
+        recent_income()
+    except Exception as e:
+        print(f"Error {e}")
+
