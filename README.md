@@ -32,7 +32,6 @@
     | func user_allocation     | Ojie           | Set operations on sets or frozensets                    |
     | func __str__             | Andy           | Magic method of informal string representation          |
     | func get_percentage_input| Ojie           | Optional parameters and/or keyword arguments            |
-    | func main                |                |                                                         |
     | func parse_args          | Gwon           | the ArgumentParser class from the argparse module       |
     | func dic_csv             | Andy           | f-strings                                               |
     | func recent_income       | Christian      | visualizing data with pyplot or seaborn                 |
