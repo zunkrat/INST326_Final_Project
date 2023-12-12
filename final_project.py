@@ -277,6 +277,11 @@ def dic_csv(dictionary):
         
     Primary Author for function: Andy Do
     
+    Reference for to_csv:
+        Url: https://www.geeksforgeeks.org/saving-a-pandas-dataframe-as-a-csv/
+    Reasoning for using this:
+        This function was a perfect solution for our code because we wantde to see if we can turn a dictionary into a csv file
+    
     """
     df = pd.DataFrame([dictionary])
 
