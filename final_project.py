@@ -345,6 +345,9 @@ def recent_income(csv_file = 'bank.csv', num_rows = 10):
 
     Returns:
         None
+
+
+    By Christian Bechmann - visualizing data with pyplot or seaborn
     """
     try:
         df = pd.read_csv(csv_file)
@@ -381,6 +384,9 @@ def total_saved(dataframe):
 
     Returns:
         float: Total amount saved.
+
+
+    By Christian Bechmann - Pandas operations (filtering)
     """
     dataframe['Cumulative Savings'] = dataframe['savings'].cumsum()
     total_amount_saved = dataframe['Cumulative Savings'].iloc[-1]
