@@ -294,7 +294,7 @@ def dic_csv(dictionary):
                 df.to_csv(file, index = False, header = False)
 
     except Exception as e:
-        print(f"Error writing to CSV file: {e}")
+        print(f"Problem has occurred when making csv file {e}")
         
 
                 
