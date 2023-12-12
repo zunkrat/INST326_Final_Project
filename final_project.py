@@ -173,9 +173,6 @@ class IncomeAllocator:
         Returns:
             dict: A dictionary containing the allocated percentages for each category.
                   The keys are category names, and the values are the corresponding percentages.
-                  
-        Primary author of method: Ojie Okodogbe
-        Technique: Operations on frozen sets
         """
         categories = frozenset(['Entertainment', 'Groceries', 'Housing', 'Utilities', 'Travel', 'Recreation', 'Transportation', 'Other'])
         allocation_percentages = {}
@@ -229,9 +226,6 @@ class IncomeAllocator:
 
         Returns:
             float: The valid percentage entered by the user.
-            
-        Primary author of method: Ojie Okodogbe
-        Technique: Keyword arguments
         """
         while True:
             try:
@@ -404,6 +398,7 @@ if __name__ == "__main__":
     total_amount_saved = total_saved(df)
     
     print(f'Total Amount Saved (Savings Account): ${total_amount_saved:.2f}')
+    print(income_allocator)
     
     try:
         recent_income()
