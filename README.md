@@ -17,7 +17,7 @@
         to calculate the total the user has saved. 
     
     How to run the program from the command line:
-    
+    You first have to enter "python" or "python3" depending on the operating system you are using. Then, enter the file    name which is "final_project.py". After you enter a space, there are 3 command line arguments that have to be inputted. The first one is the filepath to the text files of the paystubs which would look like: "8_26_23_paystub.txt". The next argument is the percentage of your net pay that you want to allocate towards your checking account (between 0 and 1). The final argument is the percentage of the next pay that you want to allocate towards your savings account. You also want to make sure that both of those numbers add up to 1.
     
     How to use the program and/or interpret the output of the program: 
     
